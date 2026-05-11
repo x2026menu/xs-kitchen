@@ -1,1 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X+S Kitchen</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FBCEB1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="X+S Kitchen">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icon-152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<style>
+  :root {
+    --main:#FBCEB1; --main2:#F4A070; --main3:#D4704A;
+    --dark:#6A2800; --mid:#B07050; --light:#D4A080;
+    --bg:#FFFAF6; --card:#FFFFFF; --cream:#FFF0E4;
+    --mint:#A8D8C8; --mint2:#E8F8F4; --mint3:#104840;
+    --rose:#F4C2C2; --rose2:#E89090; --rose3:#FFF5F5;
+    --idea:#EDE0FF; --idea2:#7040C0; --ideabdr:#C8A8F0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--dark);}
+  .app{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
 
+  /* HERO */
+  .hero{background:var(--main);border-bottom:2px dashed var(--main2);flex-shrink:0;}
+  .hero-inner{display:flex;align-items:center;padding:10px 18px;gap:14px;}
+  .hero-img{width:76px;height:76px;border-radius:16px;overflow:hidden;border:2.5px solid var(--main2);flex-shrink:0;background:var(--main2);display:flex;align-items:center;justify-content:center;font-size:32px;}
+  .hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 20%;}
+  .hero-text{flex:1;}
+  .hero-title{font-size:20px;font-weight:900;color:var(--dark);}
+  .hero-right{display:flex;align-items:center;gap:8px;}
+  .hero-search{background:rgba(255,255,255,0.8);border:1.5px solid var(--main2);border-radius:20px;padding:7px 14px;font-size:12px;font-weight:700;color:var(--mid);cursor:pointer;white-space:nowrap;}
+  .sync-dot{width:10px;height:10px;border-radius:50%;background:#ccc;flex-shrink:0;}
+  .sync-dot.ok{background:#51CF66;}
+  .sync-dot.err{background:#FF6B6B;}
+  .sync-dot.loading{background:#FFBE0B;animation:pulse 1s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+  /* CUISINE TABS */
+  .cbar{display:flex;background:var(--main);border-bottom:2px solid var(--main2);padding:0 14px;flex-shrink:0;overflow-x:auto;}
+  .ctab{padding:9px 15px;font-size:13px;font-weight:800;color:var(--mid);border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;transition:all .15s;}
+  .ctab:hover{color:var(--dark);}
+  .ctab.on{color:var(--dark);border-bottom-color:var(--dark);}
+
+  /* FILTER STRIP */
+  .fstrip{background:var(--rose3);border-bottom:1px solid var(--rose);padding:5px 16px;display:flex;align-items:center;gap:7px;font-size:11px;font-weight:800;color:var(--main3);flex-shrink:0;min-height:30px;flex-wrap:wrap;}
+  .fpill{background:var(--main);color:var(--dark);padding:2px 10px;border-radius:10px;font-size:11px;font-weight:800;}
+  .fpill.c{background:var(--mint);color:var(--mint3);}
+  .fcross{color:var(--main2);font-weight:900;}
+  .fres{color:var(--mid);font-weight:600;}
+  .fclr{margin-left:auto;color:var(--light);cursor:pointer;font-weight:700;}
+  .fclr:hover{color:var(--main3);}
+
+  /* MAIN */
+  .main-area{display:flex;flex:1;overflow:hidden;}
+
+  /* SIDEBAR */
+  .sidebar{width:136px;background:var(--main);border-right:2px dashed var(--main2);overflow-y:auto;flex-shrink:0;padding:8px 0;}
+  .slbl{font-size:9px;font-weight:800;color:var(--mid);padding:4px 12px 6px;letter-spacing:1px;text-transform:uppercase;}
+  .sitem{display:flex;align-items:center;gap:7px;padding:7px 12px;font-size:12px;font-weight:700;color:var(--dark);cursor:pointer;border-right:3px solid transparent;transition:all .12s;}
+  .sitem:hover{background:rgba(255,255,255,0.35);}
+  .sitem.on{background:var(--card);border-right-color:var(--dark);font-weight:900;}
+  .sitem .ico{font-size:15px;}
+
+  /* GRID */
+  .panel{flex:1;overflow-y:auto;padding:14px 16px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;}
+  .dcard{background:var(--card);border-radius:16px;border:1.5px solid var(--main2);overflow:hidden;cursor:pointer;transition:transform .15s,border-color .15s;}
+  .dcard:hover{transform:translateY(-2px);border-color:var(--main3);}
+  .dcard.idea{border-color:var(--ideabdr);}
+  .dcard.idea:hover{border-color:var(--idea2);}
+  .dimg{height:108px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:40px;position:relative;overflow:hidden;}
+  .dimg.idea{background:var(--idea);}
+  .dimg img{width:100%;height:100%;object-fit:cover;}
+  .dfav{position:absolute;top:6px;right:7px;font-size:10px;background:var(--rose2);color:white;padding:2px 6px;border-radius:6px;font-weight:800;cursor:pointer;z-index:2;}
+  .dfav.on{background:var(--main3);}
+  .dbody{padding:8px 10px 10px;}
+  .den{font-size:12px;font-weight:800;color:var(--dark);line-height:1.2;}
+  .dzh{font-size:10px;font-weight:700;color:var(--mid);margin-top:2px;}
+  .dtags{display:flex;gap:3px;margin-top:5px;flex-wrap:wrap;}
+  .dtag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:5px;background:var(--cream);color:var(--dark);}
+  .dtag.cui{background:var(--mint2);color:var(--mint3);}
+  .dtag.idea{background:var(--idea);color:var(--idea2);}
+  .addcard{background:transparent;border:2px dashed var(--main2);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;min-height:155px;color:var(--main2);font-size:13px;font-weight:800;gap:6px;transition:all .15s;}
+  .addcard:hover{background:var(--cream);border-color:var(--main3);color:var(--main3);}
+  .addcard .plus{font-size:28px;}
+  .empty{grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--light);font-size:14px;font-weight:700;}
+  .eico{font-size:40px;display:block;margin-bottom:10px;}
+  .skel{background:linear-gradient(90deg,var(--cream) 25%,var(--main) 50%,var(--cream) 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:16px;height:155px;}
+  @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+  /* OVERLAY */
+  .ov{position:fixed;inset:0;background:rgba(106,40,0,.3);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;}
+  .ov.open{opacity:1;pointer-events:all;}
+  .mbox{background:var(--card);border-radius:24px;border:2px solid var(--main2);width:100%;max-width:600px;max-height:88vh;overflow-y:auto;transform:translateY(16px);transition:transform .2s;}
+  .ov.open .mbox{transform:translateY(0);}
+
+  /* MODAL HEADER */
+  .mhd{background:var(--main);padding:13px 18px;display:flex;align-items:center;gap:10px;border-bottom:1.5px solid var(--main2);border-radius:22px 22px 0 0;position:sticky;top:0;z-index:2;}
+  .mhd.idea{background:var(--idea);border-bottom-color:var(--ideabdr);}
+  .mback{font-size:20px;cursor:pointer;color:var(--dark);line-height:1;}
+  .mtit{flex:1;}
+  .men2{font-size:16px;font-weight:900;color:var(--dark);}
+  .mzh2{font-size:11px;font-weight:700;color:var(--mid);margin-top:1px;}
+  .medit{font-size:11px;font-weight:800;color:var(--dark);background:rgba(255,255,255,.75);border:1.5px solid var(--main2);padding:5px 12px;border-radius:10px;cursor:pointer;}
+  .medit:hover{background:white;}
+
+  /* DISH PHOTO */
+  .mimg{width:100%;height:240px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:80px;position:relative;overflow:hidden;cursor:pointer;}
+  .mimg.idea{background:var(--idea);}
+  .mimg img{width:100%;height:100%;object-fit:cover;}
+  .mimg-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;transition:background .2s;}
+  .mimg:hover .mimg-overlay{background:rgba(0,0,0,0.25);}
+  .mimg-overlay-txt{color:white;font-size:13px;font-weight:800;opacity:0;transition:opacity .2s;text-align:center;padding:8px;}
+  .mimg:hover .mimg-overlay-txt{opacity:1;}
+  .mimglbl{position:absolute;bottom:10px;right:12px;font-size:10px;font-weight:800;background:rgba(255,255,255,.88);color:var(--dark);padding:3px 10px;border-radius:8px;pointer-events:none;}
+
+  /* BOOK PAGES */
+  .book-pages{display:flex;gap:8px;padding:12px 18px 0;overflow-x:auto;}
+  .book-page{flex-shrink:0;border-radius:10px;overflow:hidden;border:1.5px solid var(--main2);cursor:pointer;transition:border-color .15s;}
+  .book-page:hover{border-color:var(--main3);}
+  .book-page img{width:180px;height:240px;object-fit:cover;display:block;}
+  .book-page-lbl{font-size:9px;font-weight:800;color:var(--mid);padding:4px 8px;background:var(--cream);text-align:center;}
+
+  /* MODAL BODY */
+  .mbody{padding:16px 18px;display:flex;flex-direction:column;gap:14px;}
+  .mtags{display:flex;gap:6px;flex-wrap:wrap;}
+  .mtag{font-size:11px;font-weight:700;padding:4px 10px;border-radius:10px;background:var(--cream);color:var(--dark);border:1px solid var(--main2);}
+  .mtag.cui{background:var(--mint2);color:var(--mint3);border-color:var(--mint);}
+  .mtag.cat{background:var(--rose3);color:#803050;border-color:var(--rose);}
+  .mtag.idea{background:var(--idea);color:var(--idea2);border-color:var(--ideabdr);}
+  .msec{font-size:10px;font-weight:800;color:var(--mid);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+  .mrec{background:var(--cream);border-radius:12px;padding:12px 14px;font-size:13px;font-weight:600;color:var(--dark);line-height:1.75;white-space:pre-wrap;border:1px solid var(--main2);}
+  .mrec.mt{color:var(--light);font-style:italic;border-style:dashed;}
+  .mlink{font-size:12px;font-weight:700;color:var(--main3);text-decoration:underline;cursor:pointer;word-break:break-all;}
+  .mlink.mt{color:var(--light);font-style:italic;text-decoration:none;}
+  .mbtns{display:flex;gap:8px;margin-top:4px;}
+  .mbtn{flex:1;border-radius:12px;padding:10px;text-align:center;font-size:13px;font-weight:800;cursor:pointer;border:1.5px solid var(--main2);transition:all .15s;}
+  .mbtn.ed{background:var(--cream);color:var(--dark);}
+  .mbtn.ed:hover{background:var(--main);}
+  .mbtn.sv{background:var(--rose2);color:white;border-color:var(--rose2);}
+  .mbtn.sv:hover,.mbtn.sv.on{background:var(--main3);border-color:var(--main3);}
+  .mbtn.del{background:#fff;color:#cc3333;border-color:#ffaaaa;flex:0 0 auto;padding:10px 14px;}
+  .mbtn.del:hover{background:#ffeeee;}
+
+  /* PHOTO UPLOAD PROGRESS */
+  .upload-progress{background:var(--cream);border:1.5px solid var(--main2);border-radius:10px;padding:10px 14px;font-size:12px;font-weight:700;color:var(--mid);display:flex;align-items:center;gap:8px;}
+  .upload-bar{height:6px;background:var(--main2);border-radius:3px;flex:1;overflow:hidden;}
+  .upload-bar-fill{height:100%;background:var(--main3);border-radius:3px;width:0%;transition:width .3s;}
+
+  /* FULLSCREEN VIEWER */
+  .viewer-ov{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:300;display:none;align-items:center;justify-content:center;cursor:pointer;}
+  .viewer-ov.open{display:flex;}
+  .viewer-ov img{max-width:95vw;max-height:95vh;object-fit:contain;border-radius:8px;}
+
+  /* EDIT MODAL */
+  .ebdy{padding:16px 18px;display:flex;flex-direction:column;gap:12px;}
+  .elbl{font-size:10px;font-weight:800;color:var(--mid);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;}
+  .einp{width:100%;padding:9px 12px;border:1.5px solid var(--main2);border-radius:10px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;color:var(--dark);background:var(--cream);outline:none;transition:border-color .15s;}
+  .einp:focus{border-color:var(--main3);}
+  textarea.einp{min-height:130px;resize:vertical;line-height:1.65;}
+  .erow{display:flex;gap:10px;}
+  .erow>div{flex:1;}
+
+  /* PHOTO UPLOAD IN EDIT */
+  .photo-upload-area{border:2px dashed var(--main2);border-radius:12px;padding:14px;text-align:center;cursor:pointer;transition:all .15s;background:var(--cream);}
+  .photo-upload-area:hover{border-color:var(--main3);background:white;}
+  .photo-preview{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:8px;display:block;}
+  .photo-upload-btn{font-size:12px;font-weight:800;color:var(--main3);}
+  .photo-upload-hint{font-size:10px;font-weight:600;color:var(--light);margin-top:4px;}
+
+  .esave{background:var(--main3);color:white;border:none;border-radius:12px;padding:12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;width:100%;transition:background .15s;}
+  .esave:hover{background:var(--dark);}
+  .esave:disabled{background:var(--light);cursor:not-allowed;}
+  .ecancel{background:var(--cream);color:var(--dark);border:1.5px solid var(--main2);border-radius:12px;padding:12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;width:100%;margin-top:6px;}
+
+  /* TOAST */
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--dark);color:white;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:700;z-index:400;transition:transform .3s;pointer-events:none;white-space:nowrap;}
+  .toast.show{transform:translateX(-50%) translateY(0);}
+
+  /* SEARCH */
+  .sbar{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--main);padding:12px 16px;display:flex;gap:10px;align-items:center;border-bottom:2px solid var(--main2);transform:translateY(-100%);transition:transform .2s;}
+  .sbar.open{transform:translateY(0);}
+  .sinp{flex:1;padding:8px 14px;border:1.5px solid var(--main2);border-radius:20px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;color:var(--dark);background:white;outline:none;}
+  .sclose{font-size:18px;cursor:pointer;color:var(--dark);font-weight:800;padding:4px 8px;}
+
+  /* hidden file input */
+  #fileInput{display:none;}
+  #editFileInput{display:none;}
+
+  @media(max-width:600px){
+    .sidebar{width:56px;}
+    .sitem{flex-direction:column;gap:1px;padding:7px 4px;font-size:7.5px;}
+    .sitem .ico{font-size:17px;}
+    .hero-title{font-size:16px;}
+    .hero-search{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-img">
+        <img src="hero_illustration.png" alt="X+S" onerror="this.parentNode.innerHTML='🥟'">
+      </div>
+      <div class="hero-text">
+        <div class="hero-title">X+S Kitchen</div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-search" onclick="openSearch()">🔍 Search</div>
+        <div class="sync-dot loading" id="syncDot" title="Sync status"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cbar" id="cbar"></div>
+  <div class="fstrip" id="fstrip"></div>
+  <div class="main-area">
+    <div class="sidebar" id="sidebar"></div>
+    <div class="panel"><div class="grid" id="grid"></div></div>
+  </div>
+</div>
+
+<!-- hidden file input for photo upload -->
+<input type="file" id="fileInput" accept="image/*">
+<input type="file" id="editFileInput" accept="image/*">
+
+<!-- search -->
+<div class="sbar" id="sbar">
+  <input class="sinp" id="sinp" placeholder="Search English or 中文..." oninput="onSearch(this.value)">
+  <div class="sclose" onclick="closeSearch()">✕</div>
+</div>
+
+<!-- detail modal -->
+<div class="ov" id="detOv" onclick="ovClose(event,'detOv',closeDet)">
+  <div class="mbox" id="detBox"></div>
+</div>
+<!-- edit modal -->
+<div class="ov" id="editOv" onclick="ovClose(event,'editOv',closeEdit)">
+  <div class="mbox" id="editBox"></div>
+</div>
+<!-- fullscreen viewer -->
+<div class="viewer-ov" id="viewerOv" onclick="closeViewer()">
+  <img id="viewerImg" src="" alt="Recipe page">
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════
+//  CONFIG
+// ══════════════════════════════════════
+const SB_URL = 'https://blerbnyizjcjtohlkfcu.supabase.co';
+const SB_KEY = 'sb_publishable_QRtl5Kq2ohD_bckNegKClA_fy1BRXz1';
+const H = {
+  'apikey': SB_KEY,
+  'Authorization': `Bearer ${SB_KEY}`,
+  'Content-Type': 'application/json',
+  'Prefer': 'return=representation'
+};
+
+// ══════════════════════════════════════
+//  DATABASE
+// ══════════════════════════════════════
+async function dbGet() {
+  const r = await fetch(`${SB_URL}/rest/v1/dishes?order=id`, { headers: H });
+  if (!r.ok) throw new Error('fetch failed');
+  return r.json();
+}
+async function dbInsert(d) {
+  const r = await fetch(`${SB_URL}/rest/v1/dishes`, {
+    method: 'POST', headers: H,
+    body: JSON.stringify({ en:d.en, zh:d.zh, cuisine:d.cuisine, cat:d.cat,
+      emoji:d.emoji, recipe:d.recipe, link:d.link, photo:d.photo, saved:d.saved })
+  });
+  if (!r.ok) throw new Error('insert failed');
+  return (await r.json())[0];
+}
+async function dbUpdate(id, p) {
+  const r = await fetch(`${SB_URL}/rest/v1/dishes?id=eq.${id}`, {
+    method: 'PATCH', headers: H, body: JSON.stringify(p)
+  });
+  if (!r.ok) throw new Error('update failed');
+}
+async function dbDelete(id) {
+  const r = await fetch(`${SB_URL}/rest/v1/dishes?id=eq.${id}`, {
+    method: 'DELETE', headers: H
+  });
+  if (!r.ok) throw new Error('delete failed');
+}
+
+// ══════════════════════════════════════
+//  STORAGE — upload photo
+// ══════════════════════════════════════
+async function uploadPhoto(file, dishId) {
+  const ext = file.name.split('.').pop();
+  const path = `dish_${dishId}_${Date.now()}.${ext}`;
+  const r = await fetch(`${SB_URL}/storage/v1/object/photos/${path}`, {
+    method: 'POST',
+    headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`,
+      'Content-Type': file.type, 'x-upsert': 'true' },
+    body: file
+  });
+  if (!r.ok) throw new Error('upload failed');
+  return `${SB_URL}/storage/v1/object/public/photos/${path}`;
+}
+
+// ══════════════════════════════════════
+//  BOOK PHOTOS (local files, bundled)
+// ══════════════════════════════════════
+const BOOK = {
+  'Braised Pork': {
+    dish: 'recipe_hongshao.jpg',
+    pages: ['recipe_hongshao.jpg']
+  },
+  'Shuizhu Beef': {
+    dish: 'shuizhu_beef_photo.jpg',
+    pages: ['recipe_shuizhu_p1.jpg', 'recipe_shuizhu_p2.jpg']
+  }
+};
+
+// ══════════════════════════════════════
+//  DEFAULTS
+// ══════════════════════════════════════
+const DEFAULTS = [
+  {en:'Dumplings',            zh:'饺子 / 韭菜盒子',cuisine:'chinese', cat:'meat',     emoji:'🥟',recipe:'',link:'',photo:'',saved:false},
+  {en:'Ribs',                 zh:'糖醋排骨',        cuisine:'chinese', cat:'meat',     emoji:'🍖',recipe:'',link:'',photo:'',saved:false},
+  {en:'Braised Pork',         zh:'红烧肉',          cuisine:'chinese', cat:'meat',     emoji:'🥩',recipe:'',link:'',photo:'',saved:false},
+  {en:'Spicy Chicken Wings',  zh:'剁椒鸡翅',        cuisine:'chinese', cat:'meat',     emoji:'🍗',recipe:'',link:'',photo:'',saved:false},
+  {en:'Chicken Offal',        zh:'炒鸡胗',          cuisine:'chinese', cat:'meat',     emoji:'🫀',recipe:'',link:'',photo:'',saved:false},
+  {en:'Pig Feet',             zh:'猪脚',            cuisine:'chinese', cat:'meat',     emoji:'🐷',recipe:'',link:'',photo:'',saved:false},
+  {en:'Shuizhu Beef',         zh:'水煮牛肉',        cuisine:'chinese', cat:'meat',     emoji:'🥩',recipe:'',link:'',photo:'',saved:false},
+  {en:'Sichuan Chicken',      zh:'醋溜鸡',          cuisine:'chinese', cat:'cold',     emoji:'🐓',recipe:'',link:'',photo:'',saved:false},
+  {en:'Mouthwatering Chicken',zh:'口水鸡',          cuisine:'chinese', cat:'cold',     emoji:'🐔',recipe:'',link:'',photo:'',saved:false},
+  {en:'Pig Ear',              zh:'猪耳朵',          cuisine:'chinese', cat:'cold',     emoji:'🐷',recipe:'',link:'',photo:'',saved:false},
+  {en:'Black Egg Salad',      zh:'皮蛋沙拉',        cuisine:'chinese', cat:'cold',     emoji:'🥚',recipe:'',link:'',photo:'',saved:false},
+  {en:'White Cut Chicken',    zh:'白切鸡',          cuisine:'chinese', cat:'cold',     emoji:'🐔',recipe:'',link:'',photo:'',saved:false},
+  {en:'Salted Chicken Leg',   zh:'盐水鸡腿',        cuisine:'chinese', cat:'cold',     emoji:'🍗',recipe:'',link:'',photo:'',saved:false},
+  {en:'Mapo Tofu',            zh:'麻婆豆腐',        cuisine:'chinese', cat:'veg',      emoji:'🫕',recipe:'',link:'',photo:'',saved:false},
+  {en:'Steamed Egg',          zh:'蒸鸡蛋',          cuisine:'chinese', cat:'breakfast',emoji:'🍳',recipe:'',link:'',photo:'',saved:false},
+  {en:'Octopus & Potato',     zh:'章鱼土豆',        cuisine:'chinese', cat:'others',   emoji:'🐙',recipe:'',link:'',photo:'',saved:false},
+  {en:'Lomo Saltado',         zh:'炒牛肉',          cuisine:'peruvian',cat:'meat',     emoji:'🥘',recipe:'',link:'',photo:'',saved:false},
+  {en:'Arroz con Pollo',      zh:'鸡肉饭',          cuisine:'peruvian',cat:'meat',     emoji:'🍗',recipe:'',link:'',photo:'',saved:false},
+  {en:'Ceviche',              zh:'酸鱼片',          cuisine:'peruvian',cat:'fish',     emoji:'🐟',recipe:'',link:'',photo:'',saved:false},
+  {en:'Salmon',               zh:'三文鱼',          cuisine:'others',  cat:'fish',     emoji:'🐠',recipe:'',link:'',photo:'',saved:false},
+  {en:'Osso Buco',            zh:'牛骨髓',          cuisine:'others',  cat:'meat',     emoji:'🦴',recipe:'',link:'',photo:'',saved:false},
+  {en:'Salmorejo',            zh:'西班牙凉汤',       cuisine:'others',  cat:'soup',     emoji:'🍅',recipe:'',link:'',photo:'',saved:false},
+  {en:'Pumpkin Soup',         zh:'南瓜汤',          cuisine:'others',  cat:'soup',     emoji:'🎃',recipe:'',link:'',photo:'',saved:false},
+  {en:'Overnight Oats',       zh:'隔夜燕麦',        cuisine:'others',  cat:'breakfast',emoji:'🥣',recipe:'',link:'',photo:'',saved:false},
+  {en:'Poffertjes',           zh:'荷兰迷你松饼',     cuisine:'others',  cat:'breakfast',emoji:'🥞',recipe:'',link:'',photo:'',saved:false},
+];
+
+const CATS = [
+  {id:'all',      label:'All',        ico:'🍽'},
+  {id:'meat',     label:'Meat',       ico:'🥩'},
+  {id:'fish',     label:'Fish',       ico:'🐟'},
+  {id:'veg',      label:'Vegetables', ico:'🥦'},
+  {id:'soup',     label:'Soup',       ico:'🍲'},
+  {id:'cold',     label:'Cold Dish',  ico:'🧊'},
+  {id:'breakfast',label:'Breakfast',  ico:'🍳'},
+  {id:'sweet',    label:'Sweet',      ico:'🍬'},
+  {id:'drinks',   label:'Drinks',     ico:'🥤'},
+  {id:'ideas',    label:'Ideas',      ico:'💡'},  // ← single emoji, no duplicate
+  {id:'others',   label:'Others',     ico:'🗂'},
+];
+const CUIS = [
+  {id:'all',     label:'All'},
+  {id:'chinese', label:'🇨🇳 Chinese'},
+  {id:'peruvian',label:'🇵🇪 Peruvian'},
+  {id:'others',  label:'🌐 Others'},
+];
+
+// ══════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════
+let dishes=[], aCuis='all', aCat='all', sq='', editId=null, openDetId=null;
+let pendingPhotoFile = null; // file selected in edit modal
+
+// ══════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════
+function setSyncDot(s){ document.getElementById('syncDot').className='sync-dot '+s; }
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400);
+}
+function esc(s){ return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function ovClose(e,id,fn){ if(e.target===document.getElementById(id)) fn(); }
+function getPhoto(d){
+  if(d.photo && d.photo.startsWith('http')) return d.photo;
+  const bp = BOOK[d.en];
+  if(bp) return bp.dish;
+  return null;
+}
+
+// ══════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════
+async function init(){
+  setSyncDot('loading');
+  document.getElementById('grid').innerHTML = Array(8).fill('<div class="skel"></div>').join('');
+  try{
+    let data = await dbGet();
+    if(data.length === 0){
+      toast('Setting up X+S Kitchen... 🍑');
+      for(const d of DEFAULTS){ const row=await dbInsert(d); dishes.push(row); }
+      toast('Kitchen ready! 🎉');
+    } else { dishes=data; }
+    setSyncDot('ok');
+  } catch(e){
+    setSyncDot('err');
+    toast('Offline mode 📡');
+    dishes=DEFAULTS.map((d,i)=>({...d,id:i+1}));
+  }
+  renderAll();
+}
+
+// ══════════════════════════════════════
+//  FILTER
+// ══════════════════════════════════════
+function getFiltered(){
+  return dishes.filter(d=>{
+    const cm = aCuis==='all' || d.cuisine===aCuis;
+    const km = aCat==='all'  || d.cat===aCat;
+    const sm = !sq || d.en.toLowerCase().includes(sq) || d.zh.includes(sq);
+    return cm&&km&&sm;
+  });
+}
+
+// ══════════════════════════════════════
+//  RENDER ALL
+// ══════════════════════════════════════
+function renderAll(){
+  // cuisine tabs
+  document.getElementById('cbar').innerHTML = CUIS.map(c=>
+    `<div class="ctab${aCuis===c.id?' on':''}" onclick="setCuis('${c.id}')">${c.label}</div>`
+  ).join('');
+
+  // sidebar — ← single emoji for Ideas, no "💡 Ideas" duplication
+  document.getElementById('sidebar').innerHTML =
+    '<div class="slbl">Category</div>' +
+    CATS.map(c=>`<div class="sitem${aCat===c.id?' on':''}" onclick="setCat('${c.id}')">
+      <span class="ico">${c.ico}</span>${c.label}</div>`).join('');
+
+  // filter strip
+  const list = getFiltered();
+  const cObj = CUIS.find(c=>c.id===aCuis);
+  const kObj = CATS.find(c=>c.id===aCat);
+  let fh='';
+  if(aCuis!=='all'&&aCat!=='all'){
+    fh=`<span class="fpill">${cObj.label}</span><span class="fcross">×</span><span class="fpill c">${kObj.ico} ${kObj.label}</span>`;
+  } else if(aCuis!=='all'){
+    fh=`<span class="fpill">${cObj.label}</span><span class="fres">— all categories</span>`;
+  } else if(aCat!=='all'){
+    fh=`<span class="fpill c">${kObj.ico} ${kObj.label}</span><span class="fres">— all cuisines</span>`;
+  } else {
+    fh=`<span class="fres" style="color:var(--mid)">All dishes</span>`;
+  }
+  fh += `<span class="fres">→ ${list.length} dish${list.length!==1?'es':''}</span>`;
+  if(aCuis!=='all'||aCat!=='all') fh+=`<span class="fclr" onclick="clearF()">✕ Clear</span>`;
+  document.getElementById('fstrip').innerHTML = fh;
+
+  // grid
+  const g = document.getElementById('grid');
+  if(!list.length){
+    g.innerHTML=`<div class="empty"><span class="eico">🍽</span>No dishes here!<br>Try a different filter or add one.</div>`;
+    return;
+  }
+  g.innerHTML = list.map(d=>{
+    const isI = d.cat==='ideas';
+    const photo = getPhoto(d);
+    const imgHtml = photo
+      ? `<img src="${photo}" alt="${esc(d.en)}" onerror="this.style.display='none'">${d.emoji}`
+      : d.emoji;
+    const cObj2 = CATS.find(c=>c.id===d.cat);
+    const cuiObj2 = CUIS.find(c=>c.id===d.cuisine);
+    return `<div class="dcard${isI?' idea':''}" onclick="openDet(${d.id})">
+      <div class="dimg${isI?' idea':''}">${imgHtml}
+        <div class="dfav${d.saved?' on':''}" onclick="togSave(event,${d.id})">${d.saved?'♥':'♡'}</div>
+      </div>
+      <div class="dbody">
+        <div class="den">${esc(d.en)}</div>
+        <div class="dzh">${esc(d.zh)}</div>
+        <div class="dtags">
+          <span class="dtag${isI?' idea':''}">${cObj2?.ico} ${cObj2?.label}</span>
+          <span class="dtag cui">${cuiObj2?.label}</span>
+        </div>
+      </div></div>`;
+  }).join('') +
+  `<div class="addcard" onclick="newDish()"><div class="plus">＋</div>Add new dish</div>`;
+}
+
+function setCuis(id){ aCuis=id; renderAll(); }
+function setCat(id){ aCat=id; renderAll(); }
+function clearF(){ aCuis='all'; aCat='all'; renderAll(); }
+
+async function togSave(e,id){
+  e.stopPropagation();
+  const d=dishes.find(x=>x.id===id); if(!d)return;
+  d.saved=!d.saved; renderAll();
+  try{ await dbUpdate(id,{saved:d.saved}); setSyncDot('ok'); }
+  catch{ setSyncDot('err'); }
+}
+
+// ══════════════════════════════════════
+//  DETAIL MODAL
+// ══════════════════════════════════════
+function openDet(id){
+  openDetId=id;
+  const d=dishes.find(x=>x.id===id); if(!d)return;
+  const isI=d.cat==='ideas';
+  const cObj=CATS.find(c=>c.id===d.cat);
+  const cuiObj=CUIS.find(c=>c.id===d.cuisine);
+  const bp=BOOK[d.en];
+  const photo=getPhoto(d);
+
+  const imgArea = photo
+    ? `<div class="mimg${isI?' idea':''}" onclick="openViewer('${photo}')">
+        <img src="${photo}" alt="${esc(d.en)}">
+        <div class="mimg-overlay"><div class="mimg-overlay-txt">🔍 Tap to enlarge<br><small>or Edit to change photo</small></div></div>
+       </div>`
+    : `<div class="mimg${isI?' idea':''}" onclick="openEdit(${d.id})">
+        <span style="font-size:80px">${d.emoji}</span>
+        <div class="mimglbl">📷 Tap Edit to add photo</div>
+       </div>`;
+
+  const pagesStrip = bp
+    ? `<div class="book-pages">
+        ${bp.pages.map((pg,i)=>`
+          <div class="book-page" onclick="openViewer('${pg}')">
+            <img src="${pg}" alt="Recipe page ${i+1}" loading="lazy">
+            <div class="book-page-lbl">📖 Original recipe p.${i+1} — tap to enlarge</div>
+          </div>`).join('')}
+       </div>` : '';
+
+  document.getElementById('detBox').innerHTML=`
+    <div class="mhd${isI?' idea':''}">
+      <div class="mback" onclick="closeDet()">←</div>
+      <div class="mtit"><div class="men2">${esc(d.en)}</div><div class="mzh2">${esc(d.zh)}</div></div>
+      <div class="medit" onclick="openEdit(${d.id})">✏️ Edit</div>
+    </div>
+    ${imgArea}
+    ${pagesStrip}
+    <div class="mbody">
+      <div class="mtags">
+        <span class="mtag cat${isI?' idea':''}">${cObj?.ico} ${cObj?.label}</span>
+        <span class="mtag cui">${cuiObj?.label}</span>
+      </div>
+      <div><div class="msec">Recipe 食谱</div>
+        <div class="mrec${(!d.recipe&&!bp)?' mt':''}">${
+          bp&&!d.recipe
+            ? '📖 See the original recipe pages above — tap to enlarge!'
+            : d.recipe ? esc(d.recipe) : 'No recipe yet — tap ✏️ Edit to add one!'
+        }</div>
+      </div>
+      <div><div class="msec">Reference 参考</div>
+        ${d.link
+          ?`<div class="mlink" onclick="window.open('${esc(d.link)}','_blank')">🔗 ${esc(d.link)}</div>`
+          :`<div class="mlink mt">No link yet — tap ✏️ Edit</div>`}
+      </div>
+      <div class="mbtns">
+        <div class="mbtn ed" onclick="openEdit(${d.id})">✏️ Edit dish</div>
+        <div class="mbtn sv${d.saved?' on':''}" onclick="togSaveMod(${d.id})">${d.saved?'♥ Saved!':'♡ Save'}</div>
+        <div class="mbtn del" onclick="deleteDish(${d.id})">🗑</div>
+      </div>
+    </div>`;
+  document.getElementById('detOv').classList.add('open');
+}
+
+function openViewer(src){
+  document.getElementById('viewerImg').src=src;
+  document.getElementById('viewerOv').classList.add('open');
+}
+function closeViewer(){ document.getElementById('viewerOv').classList.remove('open'); }
+
+async function togSaveMod(id){
+  const d=dishes.find(x=>x.id===id); if(!d)return;
+  d.saved=!d.saved; openDet(id); renderAll();
+  try{ await dbUpdate(id,{saved:d.saved}); setSyncDot('ok'); }
+  catch{ setSyncDot('err'); }
+}
+async function deleteDish(id){
+  if(!confirm('Delete this dish?')) return;
+  closeDet(); dishes=dishes.filter(x=>x.id!==id); renderAll();
+  try{ await dbDelete(id); setSyncDot('ok'); toast('Dish deleted 🗑'); }
+  catch{ setSyncDot('err'); }
+}
+function closeDet(){ document.getElementById('detOv').classList.remove('open'); openDetId=null; }
+
+// ══════════════════════════════════════
+//  EDIT MODAL
+// ══════════════════════════════════════
+function openEdit(id){
+  editId=id; pendingPhotoFile=null;
+  const d=dishes.find(x=>x.id===id); if(!d)return;
+  document.getElementById('detOv').classList.remove('open');
+
+  const cOpts=CUIS.filter(c=>c.id!=='all').map(c=>
+    `<option value="${c.id}"${d.cuisine===c.id?' selected':''}>${c.label}</option>`).join('');
+  const kOpts=CATS.filter(c=>c.id!=='all').map(c=>
+    `<option value="${c.id}"${d.cat===c.id?' selected':''}>${c.ico} ${c.label}</option>`).join('');
+
+  const photo=getPhoto(d);
+  const photoSection=`
+    <div>
+      <div class="elbl">Dish photo</div>
+      <div class="photo-upload-area" onclick="triggerPhotoUpload()" id="photoUploadArea">
+        ${photo
+          ?`<img src="${photo}" class="photo-preview" id="photoPreview" alt="dish photo">`
+          :`<div id="photoPreview" style="font-size:40px;margin-bottom:8px">${d.emoji}</div>`}
+        <div class="photo-upload-btn">📷 ${photo?'Change photo':'Upload photo'}</div>
+        <div class="photo-upload-hint">JPG, PNG, HEIC — from your camera roll or files</div>
+      </div>
+      <div id="uploadStatus" style="display:none" class="upload-progress">
+        <span id="uploadStatusTxt">Uploading...</span>
+        <div class="upload-bar"><div class="upload-bar-fill" id="uploadBarFill"></div></div>
+      </div>
+    </div>`;
+
+  document.getElementById('editBox').innerHTML=`
+    <div class="mhd">
+      <div class="mback" onclick="closeEdit()">←</div>
+      <div class="mtit"><div class="men2">Edit dish</div><div class="mzh2">${esc(d.en)} · ${esc(d.zh)}</div></div>
+    </div>
+    <div class="ebdy">
+      <div><div class="elbl">English name</div><input class="einp" id="een" value="${esc(d.en)}"></div>
+      <div><div class="elbl">Chinese name 中文名</div><input class="einp" id="ezh" value="${esc(d.zh)}"></div>
+      <div class="erow">
+        <div><div class="elbl">Cuisine</div><select class="einp" id="ecui">${cOpts}</select></div>
+        <div><div class="elbl">Category</div><select class="einp" id="ecat">${kOpts}</select></div>
+      </div>
+      <div><div class="elbl">Emoji icon</div><input class="einp" id="eemo" value="${esc(d.emoji)}" placeholder="🍽"></div>
+      ${photoSection}
+      <div><div class="elbl">Recipe 食谱</div><textarea class="einp" id="erec">${esc(d.recipe)}</textarea></div>
+      <div><div class="elbl">Reference link 参考</div><input class="einp" id="elnk" value="${esc(d.link)}" placeholder="https://..."></div>
+      <button class="esave" id="esaveBtn" onclick="saveEdit()">✓ Save changes</button>
+      <button class="ecancel" onclick="closeEdit()">Cancel</button>
+    </div>`;
+  document.getElementById('editOv').classList.add('open');
+}
+
+function triggerPhotoUpload(){
+  document.getElementById('editFileInput').click();
+}
+
+document.getElementById('editFileInput').addEventListener('change', async function(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  pendingPhotoFile = file;
+  // show preview immediately
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const prev = document.getElementById('photoPreview');
+    if(prev.tagName==='IMG'){
+      prev.src = ev.target.result;
+    } else {
+      prev.outerHTML = `<img src="${ev.target.result}" class="photo-preview" id="photoPreview" alt="preview">`;
+    }
+    document.querySelector('.photo-upload-btn').textContent = '📷 Change photo';
+  };
+  reader.readAsDataURL(file);
+  this.value='';
+});
+
+async function saveEdit(){
+  const btn = document.getElementById('esaveBtn');
+  btn.disabled=true; btn.textContent='Saving...';
+
+  const d = dishes.find(x=>x.id===editId); if(!d)return;
+  d.en = document.getElementById('een').value.trim()||d.en;
+  d.zh = document.getElementById('ezh').value.trim()||d.zh;
+  d.cuisine = document.getElementById('ecui').value;
+  d.cat = document.getElementById('ecat').value;
+  d.emoji = document.getElementById('eemo').value.trim()||d.emoji;
+  d.recipe = document.getElementById('erec').value.trim();
+  d.link = document.getElementById('elnk').value.trim();
+
+  // upload photo if one was selected
+  if(pendingPhotoFile){
+    try{
+      btn.textContent='Uploading photo...';
+      document.getElementById('uploadStatus').style.display='flex';
+      // animate bar
+      let prog=0;
+      const bar=document.getElementById('uploadBarFill');
+      const iv=setInterval(()=>{ prog=Math.min(prog+10,85); bar.style.width=prog+'%'; },200);
+      const url = await uploadPhoto(pendingPhotoFile, editId);
+      clearInterval(iv); bar.style.width='100%';
+      d.photo = url;
+      pendingPhotoFile=null;
+    } catch(e){
+      toast('Photo upload failed — check connection');
+    }
+  }
+
+  try{
+    await dbUpdate(editId,{en:d.en,zh:d.zh,cuisine:d.cuisine,cat:d.cat,
+      emoji:d.emoji,recipe:d.recipe,link:d.link,photo:d.photo});
+    setSyncDot('ok'); toast('Saved & synced ✓');
+  } catch{ setSyncDot('err'); toast('Saved locally (sync failed)'); }
+
+  closeEdit(); renderAll();
+  setTimeout(()=>openDet(editId),50);
+}
+
+function closeEdit(){ document.getElementById('editOv').classList.remove('open'); pendingPhotoFile=null; }
+
+// ══════════════════════════════════════
+//  NEW DISH
+// ══════════════════════════════════════
+async function newDish(){
+  const nd={en:'New Dish',zh:'新菜',
+    cuisine:aCuis!=='all'?aCuis:'chinese',
+    cat:aCat!=='all'?aCat:'meat',
+    emoji:'🍽',recipe:'',link:'',photo:'',saved:false};
+  try{
+    setSyncDot('loading');
+    const row=await dbInsert(nd);
+    dishes.push(row); setSyncDot('ok');
+    renderAll(); setTimeout(()=>openEdit(row.id),50);
+  } catch{ setSyncDot('err'); toast('Could not add — check connection'); }
+}
+
+// ══════════════════════════════════════
+//  SEARCH
+// ══════════════════════════════════════
+function openSearch(){ document.getElementById('sbar').classList.add('open'); document.getElementById('sinp').focus(); }
+function closeSearch(){ document.getElementById('sbar').classList.remove('open'); sq=''; document.getElementById('sinp').value=''; renderAll(); }
+function onSearch(v){ sq=v.toLowerCase().trim(); renderAll(); }
+
+// ══════════════════════════════════════
+//  AUTO REFRESH every 30s
+// ══════════════════════════════════════
+setInterval(async()=>{
+  try{
+    const data=await dbGet(); dishes=data;
+    if(!document.getElementById('detOv').classList.contains('open')&&
+       !document.getElementById('editOv').classList.contains('open')){ renderAll(); }
+    setSyncDot('ok');
+  } catch{ setSyncDot('err'); }
+},30000);
+
+init();
+</script>
+</body>
+</html>
