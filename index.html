@@ -100,7 +100,7 @@
   /* OVERLAY */
   .ov{position:fixed;inset:0;background:rgba(106,40,0,.3);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;}
   .ov.open{opacity:1;pointer-events:all;}
-  .mbox{background:var(--card);border-radius:24px;border:2px solid var(--main2);width:100%;max-width:600px;max-height:88vh;overflow-y:auto;transform:translateY(16px);transition:transform .2s;}
+  .mbox{background:var(--card);border-radius:24px;border:2px solid var(--main2);width:100%;max-width:620px;max-height:90vh;overflow-y:auto;transform:translateY(16px);transition:transform .2s;}
   .ov.open .mbox{transform:translateY(0);}
 
   /* MODAL HEADER */
@@ -118,8 +118,8 @@
   .mimg.idea{background:var(--idea);}
   .mimg img{width:100%;height:100%;object-fit:cover;}
   .mimg-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;transition:background .2s;}
-  .mimg:hover .mimg-overlay{background:rgba(0,0,0,0.25);}
-  .mimg-overlay-txt{color:white;font-size:13px;font-weight:800;opacity:0;transition:opacity .2s;text-align:center;padding:8px;}
+  .mimg:hover .mimg-overlay{background:rgba(0,0,0,0.2);}
+  .mimg-overlay-txt{color:white;font-size:13px;font-weight:800;opacity:0;transition:opacity .2s;text-align:center;}
   .mimg:hover .mimg-overlay-txt{opacity:1;}
   .mimglbl{position:absolute;bottom:10px;right:12px;font-size:10px;font-weight:800;background:rgba(255,255,255,.88);color:var(--dark);padding:3px 10px;border-radius:8px;pointer-events:none;}
 
@@ -127,8 +127,18 @@
   .book-pages{display:flex;gap:8px;padding:12px 18px 0;overflow-x:auto;}
   .book-page{flex-shrink:0;border-radius:10px;overflow:hidden;border:1.5px solid var(--main2);cursor:pointer;transition:border-color .15s;}
   .book-page:hover{border-color:var(--main3);}
-  .book-page img{width:180px;height:240px;object-fit:cover;display:block;}
+  .book-page img{width:160px;height:210px;object-fit:cover;display:block;}
   .book-page-lbl{font-size:9px;font-weight:800;color:var(--mid);padding:4px 8px;background:var(--cream);text-align:center;}
+
+  /* STEP PHOTOS in detail */
+  .step-photos{display:flex;gap:8px;padding:0;overflow-x:auto;flex-wrap:nowrap;}
+  .step-photo-item{flex-shrink:0;border-radius:10px;overflow:hidden;border:1.5px solid var(--main2);cursor:pointer;position:relative;}
+  .step-photo-item img{width:140px;height:140px;object-fit:cover;display:block;}
+  .step-photo-num{position:absolute;top:5px;left:7px;background:rgba(0,0,0,0.5);color:white;font-size:9px;font-weight:800;padding:2px 6px;border-radius:5px;}
+
+  /* VIDEO EMBED */
+  .video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;border:1.5px solid var(--main2);}
+  .video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;}
 
   /* MODAL BODY */
   .mbody{padding:16px 18px;display:flex;flex-direction:column;gap:14px;}
@@ -151,31 +161,36 @@
   .mbtn.del{background:#fff;color:#cc3333;border-color:#ffaaaa;flex:0 0 auto;padding:10px 14px;}
   .mbtn.del:hover{background:#ffeeee;}
 
-  /* PHOTO UPLOAD PROGRESS */
-  .upload-progress{background:var(--cream);border:1.5px solid var(--main2);border-radius:10px;padding:10px 14px;font-size:12px;font-weight:700;color:var(--mid);display:flex;align-items:center;gap:8px;}
-  .upload-bar{height:6px;background:var(--main2);border-radius:3px;flex:1;overflow:hidden;}
-  .upload-bar-fill{height:100%;background:var(--main3);border-radius:3px;width:0%;transition:width .3s;}
-
   /* FULLSCREEN VIEWER */
   .viewer-ov{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:300;display:none;align-items:center;justify-content:center;cursor:pointer;}
   .viewer-ov.open{display:flex;}
   .viewer-ov img{max-width:95vw;max-height:95vh;object-fit:contain;border-radius:8px;}
 
   /* EDIT MODAL */
-  .ebdy{padding:16px 18px;display:flex;flex-direction:column;gap:12px;}
+  .ebdy{padding:16px 18px;display:flex;flex-direction:column;gap:14px;}
   .elbl{font-size:10px;font-weight:800;color:var(--mid);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;}
   .einp{width:100%;padding:9px 12px;border:1.5px solid var(--main2);border-radius:10px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;color:var(--dark);background:var(--cream);outline:none;transition:border-color .15s;}
   .einp:focus{border-color:var(--main3);}
-  textarea.einp{min-height:130px;resize:vertical;line-height:1.65;}
+  textarea.einp{min-height:120px;resize:vertical;line-height:1.65;}
   .erow{display:flex;gap:10px;}
   .erow>div{flex:1;}
 
-  /* PHOTO UPLOAD IN EDIT */
-  .photo-upload-area{border:2px dashed var(--main2);border-radius:12px;padding:14px;text-align:center;cursor:pointer;transition:all .15s;background:var(--cream);}
+  /* DISH PHOTO UPLOAD in edit */
+  .photo-upload-area{border:2px dashed var(--main2);border-radius:12px;padding:12px;text-align:center;cursor:pointer;transition:all .15s;background:var(--cream);}
   .photo-upload-area:hover{border-color:var(--main3);background:white;}
-  .photo-preview{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:8px;display:block;}
+  .photo-preview-img{width:100%;height:130px;object-fit:cover;border-radius:8px;margin-bottom:8px;display:block;}
   .photo-upload-btn{font-size:12px;font-weight:800;color:var(--main3);}
-  .photo-upload-hint{font-size:10px;font-weight:600;color:var(--light);margin-top:4px;}
+  .photo-upload-hint{font-size:10px;font-weight:600;color:var(--light);margin-top:3px;}
+
+  /* STEP PHOTOS UPLOAD in edit */
+  .step-photos-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+  .step-photo-thumb{position:relative;width:90px;height:90px;border-radius:10px;overflow:hidden;border:1.5px solid var(--main2);flex-shrink:0;}
+  .step-photo-thumb img{width:100%;height:100%;object-fit:cover;}
+  .step-photo-del{position:absolute;top:3px;right:3px;background:rgba(200,0,0,0.8);color:white;border:none;border-radius:50%;width:20px;height:20px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:800;line-height:1;}
+  .step-add-btns{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+  .step-add-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;border:1.5px solid var(--main2);background:var(--cream);font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;color:var(--dark);cursor:pointer;transition:all .15s;}
+  .step-add-btn:hover{background:var(--main);border-color:var(--main2);}
+  .step-upload-progress{font-size:11px;font-weight:700;color:var(--mid);margin-top:4px;}
 
   .esave{background:var(--main3);color:white;border:none;border-radius:12px;padding:12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;width:100%;transition:background .15s;}
   .esave:hover{background:var(--dark);}
@@ -192,9 +207,7 @@
   .sinp{flex:1;padding:8px 14px;border:1.5px solid var(--main2);border-radius:20px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;color:var(--dark);background:white;outline:none;}
   .sclose{font-size:18px;cursor:pointer;color:var(--dark);font-weight:800;padding:4px 8px;}
 
-  /* hidden file input */
-  #fileInput{display:none;}
-  #editFileInput{display:none;}
+  input[type=file]{display:none;}
 
   @media(max-width:600px){
     .sidebar{width:56px;}
@@ -217,7 +230,7 @@
       </div>
       <div class="hero-right">
         <div class="hero-search" onclick="openSearch()">🔍 Search</div>
-        <div class="sync-dot loading" id="syncDot" title="Sync status"></div>
+        <div class="sync-dot loading" id="syncDot"></div>
       </div>
     </div>
   </div>
@@ -229,9 +242,10 @@
   </div>
 </div>
 
-<!-- hidden file input for photo upload -->
-<input type="file" id="fileInput" accept="image/*">
-<input type="file" id="editFileInput" accept="image/*">
+<!-- file inputs -->
+<input type="file" id="dishPhotoInput" accept="image/*">
+<input type="file" id="stepPhotoLibrary" accept="image/*" multiple>
+<input type="file" id="stepPhotoCamera" accept="image/*" capture="environment" multiple>
 
 <!-- search -->
 <div class="sbar" id="sbar">
@@ -249,116 +263,74 @@
 </div>
 <!-- fullscreen viewer -->
 <div class="viewer-ov" id="viewerOv" onclick="closeViewer()">
-  <img id="viewerImg" src="" alt="Recipe page">
+  <img id="viewerImg" src="" alt="">
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════════
-//  CONFIG
-// ══════════════════════════════════════
-const SB_URL = 'https://blerbnyizjcjtohlkfcu.supabase.co';
-const SB_KEY = 'sb_publishable_QRtl5Kq2ohD_bckNegKClA_fy1BRXz1';
-const H = {
-  'apikey': SB_KEY,
-  'Authorization': `Bearer ${SB_KEY}`,
-  'Content-Type': 'application/json',
-  'Prefer': 'return=representation'
-};
+const SB_URL='https://blerbnyizjcjtohlkfcu.supabase.co';
+const SB_KEY='sb_publishable_QRtl5Kq2ohD_bckNegKClA_fy1BRXz1';
+const H={'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':'return=representation'};
 
-// ══════════════════════════════════════
-//  DATABASE
-// ══════════════════════════════════════
-async function dbGet() {
-  const r = await fetch(`${SB_URL}/rest/v1/dishes?order=id`, { headers: H });
-  if (!r.ok) throw new Error('fetch failed');
-  return r.json();
-}
-async function dbInsert(d) {
-  const r = await fetch(`${SB_URL}/rest/v1/dishes`, {
-    method: 'POST', headers: H,
-    body: JSON.stringify({ en:d.en, zh:d.zh, cuisine:d.cuisine, cat:d.cat,
-      emoji:d.emoji, recipe:d.recipe, link:d.link, photo:d.photo, saved:d.saved })
-  });
-  if (!r.ok) throw new Error('insert failed');
-  return (await r.json())[0];
-}
-async function dbUpdate(id, p) {
-  const r = await fetch(`${SB_URL}/rest/v1/dishes?id=eq.${id}`, {
-    method: 'PATCH', headers: H, body: JSON.stringify(p)
-  });
-  if (!r.ok) throw new Error('update failed');
-}
-async function dbDelete(id) {
-  const r = await fetch(`${SB_URL}/rest/v1/dishes?id=eq.${id}`, {
-    method: 'DELETE', headers: H
-  });
-  if (!r.ok) throw new Error('delete failed');
-}
+async function dbGet(){const r=await fetch(`${SB_URL}/rest/v1/dishes?order=id`,{headers:H});if(!r.ok)throw 0;return r.json();}
+async function dbInsert(d){const r=await fetch(`${SB_URL}/rest/v1/dishes`,{method:'POST',headers:H,body:JSON.stringify({en:d.en,zh:d.zh,cuisine:d.cuisine,cat:d.cat,emoji:d.emoji,recipe:d.recipe,link:d.link,photo:d.photo,saved:d.saved,step_photos:d.step_photos||[]})});if(!r.ok)throw 0;return(await r.json())[0];}
+async function dbUpdate(id,p){const r=await fetch(`${SB_URL}/rest/v1/dishes?id=eq.${id}`,{method:'PATCH',headers:H,body:JSON.stringify(p)});if(!r.ok)throw 0;}
+async function dbDelete(id){const r=await fetch(`${SB_URL}/rest/v1/dishes?id=eq.${id}`,{method:'DELETE',headers:H});if(!r.ok)throw 0;}
 
-// ══════════════════════════════════════
-//  STORAGE — upload photo
-// ══════════════════════════════════════
-async function uploadPhoto(file, dishId) {
-  const ext = file.name.split('.').pop();
-  const path = `dish_${dishId}_${Date.now()}.${ext}`;
-  const r = await fetch(`${SB_URL}/storage/v1/object/photos/${path}`, {
-    method: 'POST',
-    headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`,
-      'Content-Type': file.type, 'x-upsert': 'true' },
-    body: file
+async function uploadFile(file,prefix){
+  const ext=file.name.split('.').pop()||'jpg';
+  const path=`${prefix}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+  const r=await fetch(`${SB_URL}/storage/v1/object/photos/${path}`,{
+    method:'POST',
+    headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':file.type||'image/jpeg','x-upsert':'true'},
+    body:file
   });
-  if (!r.ok) throw new Error('upload failed');
+  if(!r.ok)throw 0;
   return `${SB_URL}/storage/v1/object/public/photos/${path}`;
 }
 
-// ══════════════════════════════════════
-//  BOOK PHOTOS (local files, bundled)
-// ══════════════════════════════════════
-const BOOK = {
-  'Braised Pork': {
-    dish: 'recipe_hongshao.jpg',
-    pages: ['recipe_hongshao.jpg']
-  },
-  'Shuizhu Beef': {
-    dish: 'shuizhu_beef_photo.jpg',
-    pages: ['recipe_shuizhu_p1.jpg', 'recipe_shuizhu_p2.jpg']
-  }
+// first time — add step_photos column if needed
+async function ensureStepPhotosColumn(){
+  await fetch(`${SB_URL}/rest/v1/rpc/exec`,{method:'POST',headers:H,
+    body:JSON.stringify({query:"ALTER TABLE dishes ADD COLUMN IF NOT EXISTS step_photos text[] DEFAULT '{}';"})
+  }).catch(()=>{});
+}
+
+const BOOK={
+  'Braised Pork':{dish:'recipe_hongshao.jpg',pages:['recipe_hongshao.jpg']},
+  'Shuizhu Beef':{dish:'shuizhu_beef_photo.jpg',pages:['recipe_shuizhu_p1.jpg','recipe_shuizhu_p2.jpg']},
 };
 
-// ══════════════════════════════════════
-//  DEFAULTS
-// ══════════════════════════════════════
-const DEFAULTS = [
-  {en:'Dumplings',            zh:'饺子 / 韭菜盒子',cuisine:'chinese', cat:'meat',     emoji:'🥟',recipe:'',link:'',photo:'',saved:false},
-  {en:'Ribs',                 zh:'糖醋排骨',        cuisine:'chinese', cat:'meat',     emoji:'🍖',recipe:'',link:'',photo:'',saved:false},
-  {en:'Braised Pork',         zh:'红烧肉',          cuisine:'chinese', cat:'meat',     emoji:'🥩',recipe:'',link:'',photo:'',saved:false},
-  {en:'Spicy Chicken Wings',  zh:'剁椒鸡翅',        cuisine:'chinese', cat:'meat',     emoji:'🍗',recipe:'',link:'',photo:'',saved:false},
-  {en:'Chicken Offal',        zh:'炒鸡胗',          cuisine:'chinese', cat:'meat',     emoji:'🫀',recipe:'',link:'',photo:'',saved:false},
-  {en:'Pig Feet',             zh:'猪脚',            cuisine:'chinese', cat:'meat',     emoji:'🐷',recipe:'',link:'',photo:'',saved:false},
-  {en:'Shuizhu Beef',         zh:'水煮牛肉',        cuisine:'chinese', cat:'meat',     emoji:'🥩',recipe:'',link:'',photo:'',saved:false},
-  {en:'Sichuan Chicken',      zh:'醋溜鸡',          cuisine:'chinese', cat:'cold',     emoji:'🐓',recipe:'',link:'',photo:'',saved:false},
-  {en:'Mouthwatering Chicken',zh:'口水鸡',          cuisine:'chinese', cat:'cold',     emoji:'🐔',recipe:'',link:'',photo:'',saved:false},
-  {en:'Pig Ear',              zh:'猪耳朵',          cuisine:'chinese', cat:'cold',     emoji:'🐷',recipe:'',link:'',photo:'',saved:false},
-  {en:'Black Egg Salad',      zh:'皮蛋沙拉',        cuisine:'chinese', cat:'cold',     emoji:'🥚',recipe:'',link:'',photo:'',saved:false},
-  {en:'White Cut Chicken',    zh:'白切鸡',          cuisine:'chinese', cat:'cold',     emoji:'🐔',recipe:'',link:'',photo:'',saved:false},
-  {en:'Salted Chicken Leg',   zh:'盐水鸡腿',        cuisine:'chinese', cat:'cold',     emoji:'🍗',recipe:'',link:'',photo:'',saved:false},
-  {en:'Mapo Tofu',            zh:'麻婆豆腐',        cuisine:'chinese', cat:'veg',      emoji:'🫕',recipe:'',link:'',photo:'',saved:false},
-  {en:'Steamed Egg',          zh:'蒸鸡蛋',          cuisine:'chinese', cat:'breakfast',emoji:'🍳',recipe:'',link:'',photo:'',saved:false},
-  {en:'Octopus & Potato',     zh:'章鱼土豆',        cuisine:'chinese', cat:'others',   emoji:'🐙',recipe:'',link:'',photo:'',saved:false},
-  {en:'Lomo Saltado',         zh:'炒牛肉',          cuisine:'peruvian',cat:'meat',     emoji:'🥘',recipe:'',link:'',photo:'',saved:false},
-  {en:'Arroz con Pollo',      zh:'鸡肉饭',          cuisine:'peruvian',cat:'meat',     emoji:'🍗',recipe:'',link:'',photo:'',saved:false},
-  {en:'Ceviche',              zh:'酸鱼片',          cuisine:'peruvian',cat:'fish',     emoji:'🐟',recipe:'',link:'',photo:'',saved:false},
-  {en:'Salmon',               zh:'三文鱼',          cuisine:'others',  cat:'fish',     emoji:'🐠',recipe:'',link:'',photo:'',saved:false},
-  {en:'Osso Buco',            zh:'牛骨髓',          cuisine:'others',  cat:'meat',     emoji:'🦴',recipe:'',link:'',photo:'',saved:false},
-  {en:'Salmorejo',            zh:'西班牙凉汤',       cuisine:'others',  cat:'soup',     emoji:'🍅',recipe:'',link:'',photo:'',saved:false},
-  {en:'Pumpkin Soup',         zh:'南瓜汤',          cuisine:'others',  cat:'soup',     emoji:'🎃',recipe:'',link:'',photo:'',saved:false},
-  {en:'Overnight Oats',       zh:'隔夜燕麦',        cuisine:'others',  cat:'breakfast',emoji:'🥣',recipe:'',link:'',photo:'',saved:false},
-  {en:'Poffertjes',           zh:'荷兰迷你松饼',     cuisine:'others',  cat:'breakfast',emoji:'🥞',recipe:'',link:'',photo:'',saved:false},
+const DEFAULTS=[
+  {en:'Dumplings',            zh:'饺子 / 韭菜盒子',cuisine:'chinese', cat:'meat',     emoji:'🥟',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Ribs',                 zh:'糖醋排骨',        cuisine:'chinese', cat:'meat',     emoji:'🍖',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Braised Pork',         zh:'红烧肉',          cuisine:'chinese', cat:'meat',     emoji:'🥩',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Spicy Chicken Wings',  zh:'剁椒鸡翅',        cuisine:'chinese', cat:'meat',     emoji:'🍗',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Chicken Offal',        zh:'炒鸡胗',          cuisine:'chinese', cat:'meat',     emoji:'🫀',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Pig Feet',             zh:'猪脚',            cuisine:'chinese', cat:'meat',     emoji:'🐷',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Shuizhu Beef',         zh:'水煮牛肉',        cuisine:'chinese', cat:'meat',     emoji:'🥩',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Sichuan Chicken',      zh:'醋溜鸡',          cuisine:'chinese', cat:'cold',     emoji:'🐓',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Mouthwatering Chicken',zh:'口水鸡',          cuisine:'chinese', cat:'cold',     emoji:'🐔',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Pig Ear',              zh:'猪耳朵',          cuisine:'chinese', cat:'cold',     emoji:'🐷',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Black Egg Salad',      zh:'皮蛋沙拉',        cuisine:'chinese', cat:'cold',     emoji:'🥚',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'White Cut Chicken',    zh:'白切鸡',          cuisine:'chinese', cat:'cold',     emoji:'🐔',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Salted Chicken Leg',   zh:'盐水鸡腿',        cuisine:'chinese', cat:'cold',     emoji:'🍗',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Mapo Tofu',            zh:'麻婆豆腐',        cuisine:'chinese', cat:'veg',      emoji:'🫕',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Steamed Egg',          zh:'蒸鸡蛋',          cuisine:'chinese', cat:'breakfast',emoji:'🍳',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Octopus & Potato',     zh:'章鱼土豆',        cuisine:'chinese', cat:'others',   emoji:'🐙',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Lomo Saltado',         zh:'炒牛肉',          cuisine:'peruvian',cat:'meat',     emoji:'🥘',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Arroz con Pollo',      zh:'鸡肉饭',          cuisine:'peruvian',cat:'meat',     emoji:'🍗',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Ceviche',              zh:'酸鱼片',          cuisine:'peruvian',cat:'fish',     emoji:'🐟',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Salmon',               zh:'三文鱼',          cuisine:'others',  cat:'fish',     emoji:'🐠',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Osso Buco',            zh:'牛骨髓',          cuisine:'others',  cat:'meat',     emoji:'🦴',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Salmorejo',            zh:'西班牙凉汤',       cuisine:'others',  cat:'soup',     emoji:'🍅',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Pumpkin Soup',         zh:'南瓜汤',          cuisine:'others',  cat:'soup',     emoji:'🎃',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Overnight Oats',       zh:'隔夜燕麦',        cuisine:'others',  cat:'breakfast',emoji:'🥣',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
+  {en:'Poffertjes',           zh:'荷兰迷你松饼',     cuisine:'others',  cat:'breakfast',emoji:'🥞',recipe:'',link:'',photo:'',saved:false,step_photos:[]},
 ];
 
-const CATS = [
+const CATS=[
   {id:'all',      label:'All',        ico:'🍽'},
   {id:'meat',     label:'Meat',       ico:'🥩'},
   {id:'fish',     label:'Fish',       ico:'🐟'},
@@ -368,179 +340,167 @@ const CATS = [
   {id:'breakfast',label:'Breakfast',  ico:'🍳'},
   {id:'sweet',    label:'Sweet',      ico:'🍬'},
   {id:'drinks',   label:'Drinks',     ico:'🥤'},
-  {id:'ideas',    label:'Ideas',      ico:'💡'},  // ← single emoji, no duplicate
+  {id:'ideas',    label:'Ideas',      ico:'💡'},
   {id:'others',   label:'Others',     ico:'🗂'},
 ];
-const CUIS = [
+const CUIS=[
   {id:'all',     label:'All'},
   {id:'chinese', label:'🇨🇳 Chinese'},
   {id:'peruvian',label:'🇵🇪 Peruvian'},
   {id:'others',  label:'🌐 Others'},
 ];
 
-// ══════════════════════════════════════
-//  STATE
-// ══════════════════════════════════════
-let dishes=[], aCuis='all', aCat='all', sq='', editId=null, openDetId=null;
-let pendingPhotoFile = null; // file selected in edit modal
+let dishes=[],aCuis='all',aCat='all',sq='',editId=null;
+let pendingDishPhoto=null;
+let pendingStepPhotos=[]; // {url, isNew, file}
 
-// ══════════════════════════════════════
-//  HELPERS
-// ══════════════════════════════════════
-function setSyncDot(s){ document.getElementById('syncDot').className='sync-dot '+s; }
-function toast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2400);
-}
-function esc(s){ return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function ovClose(e,id,fn){ if(e.target===document.getElementById(id)) fn(); }
+function setSyncDot(s){document.getElementById('syncDot').className='sync-dot '+s;}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400);}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function ovClose(e,id,fn){if(e.target===document.getElementById(id))fn();}
 function getPhoto(d){
-  if(d.photo && d.photo.startsWith('http')) return d.photo;
-  const bp = BOOK[d.en];
-  if(bp) return bp.dish;
+  if(d.photo&&d.photo.startsWith('http'))return d.photo;
+  const bp=BOOK[d.en];if(bp)return bp.dish;
   return null;
 }
+function getYoutubeId(url){
+  if(!url)return null;
+  const m=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/);
+  return m?m[1]:null;
+}
 
-// ══════════════════════════════════════
-//  INIT
-// ══════════════════════════════════════
 async function init(){
   setSyncDot('loading');
-  document.getElementById('grid').innerHTML = Array(8).fill('<div class="skel"></div>').join('');
+  document.getElementById('grid').innerHTML=Array(8).fill('<div class="skel"></div>').join('');
   try{
-    let data = await dbGet();
-    if(data.length === 0){
+    let data=await dbGet();
+    if(data.length===0){
       toast('Setting up X+S Kitchen... 🍑');
-      for(const d of DEFAULTS){ const row=await dbInsert(d); dishes.push(row); }
+      for(const d of DEFAULTS){const row=await dbInsert(d);dishes.push(row);}
       toast('Kitchen ready! 🎉');
-    } else { dishes=data; }
+    } else {
+      dishes=data.map(d=>({...d,step_photos:d.step_photos||[]}));
+    }
     setSyncDot('ok');
-  } catch(e){
-    setSyncDot('err');
-    toast('Offline mode 📡');
+  }catch{
+    setSyncDot('err');toast('Offline mode 📡');
     dishes=DEFAULTS.map((d,i)=>({...d,id:i+1}));
   }
   renderAll();
 }
 
-// ══════════════════════════════════════
-//  FILTER
-// ══════════════════════════════════════
 function getFiltered(){
   return dishes.filter(d=>{
-    const cm = aCuis==='all' || d.cuisine===aCuis;
-    const km = aCat==='all'  || d.cat===aCat;
-    const sm = !sq || d.en.toLowerCase().includes(sq) || d.zh.includes(sq);
+    const cm=aCuis==='all'||d.cuisine===aCuis;
+    const km=aCat==='all'||d.cat===aCat;
+    const sm=!sq||d.en.toLowerCase().includes(sq)||d.zh.includes(sq);
     return cm&&km&&sm;
   });
 }
 
-// ══════════════════════════════════════
-//  RENDER ALL
-// ══════════════════════════════════════
 function renderAll(){
-  // cuisine tabs
-  document.getElementById('cbar').innerHTML = CUIS.map(c=>
-    `<div class="ctab${aCuis===c.id?' on':''}" onclick="setCuis('${c.id}')">${c.label}</div>`
-  ).join('');
+  document.getElementById('cbar').innerHTML=CUIS.map(c=>
+    `<div class="ctab${aCuis===c.id?' on':''}" onclick="setCuis('${c.id}')">${c.label}</div>`).join('');
 
-  // sidebar — ← single emoji for Ideas, no "💡 Ideas" duplication
-  document.getElementById('sidebar').innerHTML =
-    '<div class="slbl">Category</div>' +
+  document.getElementById('sidebar').innerHTML='<div class="slbl">Category</div>'+
     CATS.map(c=>`<div class="sitem${aCat===c.id?' on':''}" onclick="setCat('${c.id}')">
       <span class="ico">${c.ico}</span>${c.label}</div>`).join('');
 
-  // filter strip
-  const list = getFiltered();
-  const cObj = CUIS.find(c=>c.id===aCuis);
-  const kObj = CATS.find(c=>c.id===aCat);
+  const list=getFiltered();
+  const cObj=CUIS.find(c=>c.id===aCuis),kObj=CATS.find(c=>c.id===aCat);
   let fh='';
-  if(aCuis!=='all'&&aCat!=='all'){
-    fh=`<span class="fpill">${cObj.label}</span><span class="fcross">×</span><span class="fpill c">${kObj.ico} ${kObj.label}</span>`;
-  } else if(aCuis!=='all'){
-    fh=`<span class="fpill">${cObj.label}</span><span class="fres">— all categories</span>`;
-  } else if(aCat!=='all'){
-    fh=`<span class="fpill c">${kObj.ico} ${kObj.label}</span><span class="fres">— all cuisines</span>`;
-  } else {
-    fh=`<span class="fres" style="color:var(--mid)">All dishes</span>`;
-  }
-  fh += `<span class="fres">→ ${list.length} dish${list.length!==1?'es':''}</span>`;
+  if(aCuis!=='all'&&aCat!=='all') fh=`<span class="fpill">${cObj.label}</span><span class="fcross">×</span><span class="fpill c">${kObj.ico} ${kObj.label}</span>`;
+  else if(aCuis!=='all') fh=`<span class="fpill">${cObj.label}</span><span class="fres">— all categories</span>`;
+  else if(aCat!=='all') fh=`<span class="fpill c">${kObj.ico} ${kObj.label}</span><span class="fres">— all cuisines</span>`;
+  else fh=`<span class="fres" style="color:var(--mid)">All dishes</span>`;
+  fh+=`<span class="fres">→ ${list.length} dish${list.length!==1?'es':''}</span>`;
   if(aCuis!=='all'||aCat!=='all') fh+=`<span class="fclr" onclick="clearF()">✕ Clear</span>`;
-  document.getElementById('fstrip').innerHTML = fh;
+  document.getElementById('fstrip').innerHTML=fh;
 
-  // grid
-  const g = document.getElementById('grid');
-  if(!list.length){
-    g.innerHTML=`<div class="empty"><span class="eico">🍽</span>No dishes here!<br>Try a different filter or add one.</div>`;
-    return;
-  }
-  g.innerHTML = list.map(d=>{
-    const isI = d.cat==='ideas';
-    const photo = getPhoto(d);
-    const imgHtml = photo
-      ? `<img src="${photo}" alt="${esc(d.en)}" onerror="this.style.display='none'">${d.emoji}`
-      : d.emoji;
-    const cObj2 = CATS.find(c=>c.id===d.cat);
-    const cuiObj2 = CUIS.find(c=>c.id===d.cuisine);
+  const g=document.getElementById('grid');
+  if(!list.length){g.innerHTML=`<div class="empty"><span class="eico">🍽</span>No dishes!<br>Try a different filter or add one.</div>`;return;}
+  g.innerHTML=list.map(d=>{
+    const isI=d.cat==='ideas',photo=getPhoto(d);
+    const img=photo?`<img src="${photo}" alt="${esc(d.en)}" onerror="this.style.display='none'">${d.emoji}`:d.emoji;
+    const c2=CATS.find(c=>c.id===d.cat),cu2=CUIS.find(c=>c.id===d.cuisine);
     return `<div class="dcard${isI?' idea':''}" onclick="openDet(${d.id})">
-      <div class="dimg${isI?' idea':''}">${imgHtml}
+      <div class="dimg${isI?' idea':''}">${img}
         <div class="dfav${d.saved?' on':''}" onclick="togSave(event,${d.id})">${d.saved?'♥':'♡'}</div>
       </div>
       <div class="dbody">
-        <div class="den">${esc(d.en)}</div>
-        <div class="dzh">${esc(d.zh)}</div>
+        <div class="den">${esc(d.en)}</div><div class="dzh">${esc(d.zh)}</div>
         <div class="dtags">
-          <span class="dtag${isI?' idea':''}">${cObj2?.ico} ${cObj2?.label}</span>
-          <span class="dtag cui">${cuiObj2?.label}</span>
+          <span class="dtag${isI?' idea':''}">${c2?.ico} ${c2?.label}</span>
+          <span class="dtag cui">${cu2?.label}</span>
         </div>
       </div></div>`;
-  }).join('') +
-  `<div class="addcard" onclick="newDish()"><div class="plus">＋</div>Add new dish</div>`;
+  }).join('')+`<div class="addcard" onclick="newDish()"><div class="plus">＋</div>Add new dish</div>`;
 }
 
-function setCuis(id){ aCuis=id; renderAll(); }
-function setCat(id){ aCat=id; renderAll(); }
-function clearF(){ aCuis='all'; aCat='all'; renderAll(); }
-
+function setCuis(id){aCuis=id;renderAll();}
+function setCat(id){aCat=id;renderAll();}
+function clearF(){aCuis='all';aCat='all';renderAll();}
 async function togSave(e,id){
-  e.stopPropagation();
-  const d=dishes.find(x=>x.id===id); if(!d)return;
-  d.saved=!d.saved; renderAll();
-  try{ await dbUpdate(id,{saved:d.saved}); setSyncDot('ok'); }
-  catch{ setSyncDot('err'); }
+  e.stopPropagation();const d=dishes.find(x=>x.id===id);if(!d)return;
+  d.saved=!d.saved;renderAll();
+  try{await dbUpdate(id,{saved:d.saved});setSyncDot('ok');}catch{setSyncDot('err');}
 }
 
-// ══════════════════════════════════════
-//  DETAIL MODAL
-// ══════════════════════════════════════
 function openDet(id){
-  openDetId=id;
-  const d=dishes.find(x=>x.id===id); if(!d)return;
+  const d=dishes.find(x=>x.id===id);if(!d)return;
   const isI=d.cat==='ideas';
-  const cObj=CATS.find(c=>c.id===d.cat);
-  const cuiObj=CUIS.find(c=>c.id===d.cuisine);
-  const bp=BOOK[d.en];
-  const photo=getPhoto(d);
+  const c=CATS.find(x=>x.id===d.cat),cu=CUIS.find(x=>x.id===d.cuisine);
+  const bp=BOOK[d.en],photo=getPhoto(d);
+  const ytId=getYoutubeId(d.link);
+  const stepPhotos=d.step_photos||[];
 
-  const imgArea = photo
-    ? `<div class="mimg${isI?' idea':''}" onclick="openViewer('${photo}')">
+  const imgArea=photo
+    ?`<div class="mimg${isI?' idea':''}" onclick="openViewer('${photo}')">
         <img src="${photo}" alt="${esc(d.en)}">
-        <div class="mimg-overlay"><div class="mimg-overlay-txt">🔍 Tap to enlarge<br><small>or Edit to change photo</small></div></div>
+        <div class="mimg-overlay"><div class="mimg-overlay-txt">🔍 Enlarge</div></div>
        </div>`
-    : `<div class="mimg${isI?' idea':''}" onclick="openEdit(${d.id})">
+    :`<div class="mimg${isI?' idea':''}" onclick="openEdit(${d.id})">
         <span style="font-size:80px">${d.emoji}</span>
         <div class="mimglbl">📷 Tap Edit to add photo</div>
        </div>`;
 
-  const pagesStrip = bp
-    ? `<div class="book-pages">
-        ${bp.pages.map((pg,i)=>`
-          <div class="book-page" onclick="openViewer('${pg}')">
-            <img src="${pg}" alt="Recipe page ${i+1}" loading="lazy">
-            <div class="book-page-lbl">📖 Original recipe p.${i+1} — tap to enlarge</div>
+  const pagesStrip=bp?`<div class="book-pages">
+    ${bp.pages.map((pg,i)=>`<div class="book-page" onclick="openViewer('${pg}')">
+      <img src="${pg}" alt="p${i+1}" loading="lazy">
+      <div class="book-page-lbl">📖 Original recipe p.${i+1}</div>
+    </div>`).join('')}
+  </div>`:'';
+
+  // step photos strip
+  const stepStrip=stepPhotos.length?`
+    <div>
+      <div class="msec">Step photos 步骤图</div>
+      <div class="step-photos">
+        ${stepPhotos.map((url,i)=>`
+          <div class="step-photo-item" onclick="openViewer('${url}')">
+            <img src="${url}" alt="Step ${i+1}">
+            <div class="step-photo-num">Step ${i+1}</div>
           </div>`).join('')}
-       </div>` : '';
+      </div>
+    </div>`:'';
+
+  // video embed
+  const videoSection=ytId?`
+    <div>
+      <div class="msec">Video 视频</div>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/${ytId}" frameborder="0"
+          allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+    </div>`
+    :d.link?`<div>
+      <div class="msec">Reference 参考</div>
+      <div class="mlink" onclick="window.open('${esc(d.link)}','_blank')">🔗 ${esc(d.link)}</div>
+    </div>`:`<div>
+      <div class="msec">Reference 参考</div>
+      <div class="mlink mt">No link yet — tap ✏️ Edit</div>
+    </div>`;
 
   document.getElementById('detBox').innerHTML=`
     <div class="mhd${isI?' idea':''}">
@@ -552,21 +512,18 @@ function openDet(id){
     ${pagesStrip}
     <div class="mbody">
       <div class="mtags">
-        <span class="mtag cat${isI?' idea':''}">${cObj?.ico} ${cObj?.label}</span>
-        <span class="mtag cui">${cuiObj?.label}</span>
+        <span class="mtag cat${isI?' idea':''}">${c?.ico} ${c?.label}</span>
+        <span class="mtag cui">${cu?.label}</span>
       </div>
-      <div><div class="msec">Recipe 食谱</div>
+      <div>
+        <div class="msec">Recipe 食谱</div>
         <div class="mrec${(!d.recipe&&!bp)?' mt':''}">${
-          bp&&!d.recipe
-            ? '📖 See the original recipe pages above — tap to enlarge!'
-            : d.recipe ? esc(d.recipe) : 'No recipe yet — tap ✏️ Edit to add one!'
+          bp&&!d.recipe?'📖 See the original recipe pages above — tap to enlarge!'
+          :d.recipe?esc(d.recipe):'No recipe yet — tap ✏️ Edit to add one!'
         }</div>
       </div>
-      <div><div class="msec">Reference 参考</div>
-        ${d.link
-          ?`<div class="mlink" onclick="window.open('${esc(d.link)}','_blank')">🔗 ${esc(d.link)}</div>`
-          :`<div class="mlink mt">No link yet — tap ✏️ Edit</div>`}
-      </div>
+      ${stepStrip}
+      ${videoSection}
       <div class="mbtns">
         <div class="mbtn ed" onclick="openEdit(${d.id})">✏️ Edit dish</div>
         <div class="mbtn sv${d.saved?' on':''}" onclick="togSaveMod(${d.id})">${d.saved?'♥ Saved!':'♡ Save'}</div>
@@ -576,55 +533,22 @@ function openDet(id){
   document.getElementById('detOv').classList.add('open');
 }
 
-function openViewer(src){
-  document.getElementById('viewerImg').src=src;
-  document.getElementById('viewerOv').classList.add('open');
-}
-function closeViewer(){ document.getElementById('viewerOv').classList.remove('open'); }
+function openViewer(src){document.getElementById('viewerImg').src=src;document.getElementById('viewerOv').classList.add('open');}
+function closeViewer(){document.getElementById('viewerOv').classList.remove('open');}
+async function togSaveMod(id){const d=dishes.find(x=>x.id===id);if(!d)return;d.saved=!d.saved;openDet(id);renderAll();try{await dbUpdate(id,{saved:d.saved});setSyncDot('ok');}catch{setSyncDot('err');}}
+async function deleteDish(id){if(!confirm('Delete this dish?'))return;closeDet();dishes=dishes.filter(x=>x.id!==id);renderAll();try{await dbDelete(id);setSyncDot('ok');toast('Deleted 🗑');}catch{setSyncDot('err');}}
+function closeDet(){document.getElementById('detOv').classList.remove('open');}
 
-async function togSaveMod(id){
-  const d=dishes.find(x=>x.id===id); if(!d)return;
-  d.saved=!d.saved; openDet(id); renderAll();
-  try{ await dbUpdate(id,{saved:d.saved}); setSyncDot('ok'); }
-  catch{ setSyncDot('err'); }
-}
-async function deleteDish(id){
-  if(!confirm('Delete this dish?')) return;
-  closeDet(); dishes=dishes.filter(x=>x.id!==id); renderAll();
-  try{ await dbDelete(id); setSyncDot('ok'); toast('Dish deleted 🗑'); }
-  catch{ setSyncDot('err'); }
-}
-function closeDet(){ document.getElementById('detOv').classList.remove('open'); openDetId=null; }
-
-// ══════════════════════════════════════
-//  EDIT MODAL
-// ══════════════════════════════════════
+// ── EDIT MODAL ────────────────────────
 function openEdit(id){
-  editId=id; pendingPhotoFile=null;
-  const d=dishes.find(x=>x.id===id); if(!d)return;
+  editId=id;pendingDishPhoto=null;
+  const d=dishes.find(x=>x.id===id);if(!d)return;
   document.getElementById('detOv').classList.remove('open');
+  pendingStepPhotos=(d.step_photos||[]).map(url=>({url,isNew:false}));
 
-  const cOpts=CUIS.filter(c=>c.id!=='all').map(c=>
-    `<option value="${c.id}"${d.cuisine===c.id?' selected':''}>${c.label}</option>`).join('');
-  const kOpts=CATS.filter(c=>c.id!=='all').map(c=>
-    `<option value="${c.id}"${d.cat===c.id?' selected':''}>${c.ico} ${c.label}</option>`).join('');
-
+  const cOpts=CUIS.filter(c=>c.id!=='all').map(c=>`<option value="${c.id}"${d.cuisine===c.id?' selected':''}>${c.label}</option>`).join('');
+  const kOpts=CATS.filter(c=>c.id!=='all').map(c=>`<option value="${c.id}"${d.cat===c.id?' selected':''}>${c.ico} ${c.label}</option>`).join('');
   const photo=getPhoto(d);
-  const photoSection=`
-    <div>
-      <div class="elbl">Dish photo</div>
-      <div class="photo-upload-area" onclick="triggerPhotoUpload()" id="photoUploadArea">
-        ${photo
-          ?`<img src="${photo}" class="photo-preview" id="photoPreview" alt="dish photo">`
-          :`<div id="photoPreview" style="font-size:40px;margin-bottom:8px">${d.emoji}</div>`}
-        <div class="photo-upload-btn">📷 ${photo?'Change photo':'Upload photo'}</div>
-        <div class="photo-upload-hint">JPG, PNG, HEIC — from your camera roll or files</div>
-      </div>
-      <div id="uploadStatus" style="display:none" class="upload-progress">
-        <span id="uploadStatusTxt">Uploading...</span>
-        <div class="upload-bar"><div class="upload-bar-fill" id="uploadBarFill"></div></div>
-      </div>
-    </div>`;
 
   document.getElementById('editBox').innerHTML=`
     <div class="mhd">
@@ -638,115 +562,161 @@ function openEdit(id){
         <div><div class="elbl">Cuisine</div><select class="einp" id="ecui">${cOpts}</select></div>
         <div><div class="elbl">Category</div><select class="einp" id="ecat">${kOpts}</select></div>
       </div>
-      <div><div class="elbl">Emoji icon</div><input class="einp" id="eemo" value="${esc(d.emoji)}" placeholder="🍽"></div>
-      ${photoSection}
+      <div><div class="elbl">Emoji</div><input class="einp" id="eemo" value="${esc(d.emoji)}"></div>
+
+      <div>
+        <div class="elbl">Main dish photo</div>
+        <div class="photo-upload-area" onclick="document.getElementById('dishPhotoInput').click()">
+          ${photo?`<img src="${photo}" class="photo-preview-img" id="dishPhotoPreview" alt="dish">`:
+            `<div id="dishPhotoPreview" style="font-size:40px;margin-bottom:8px">${d.emoji}</div>`}
+          <div class="photo-upload-btn">📷 ${photo?'Change':'Upload'} dish photo</div>
+          <div class="photo-upload-hint">From library or camera</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="elbl">Step-by-step photos 步骤图 <span style="font-weight:600;color:var(--light)">(unlimited)</span></div>
+        <div class="step-photos-grid" id="stepPhotosGrid"></div>
+        <div class="step-add-btns">
+          <button class="step-add-btn" onclick="document.getElementById('stepPhotoCamera').click()">📷 Take photo</button>
+          <button class="step-add-btn" onclick="document.getElementById('stepPhotoLibrary').click()">🖼 From library</button>
+        </div>
+        <div class="step-upload-progress" id="stepProgress"></div>
+      </div>
+
       <div><div class="elbl">Recipe 食谱</div><textarea class="einp" id="erec">${esc(d.recipe)}</textarea></div>
-      <div><div class="elbl">Reference link 参考</div><input class="einp" id="elnk" value="${esc(d.link)}" placeholder="https://..."></div>
+      <div>
+        <div class="elbl">Reference / YouTube link</div>
+        <input class="einp" id="elnk" value="${esc(d.link)}" placeholder="https://youtube.com/watch?v=...">
+        <div style="font-size:10px;color:var(--light);font-weight:600;margin-top:4px;">YouTube links will embed as a playable video in the recipe!</div>
+      </div>
       <button class="esave" id="esaveBtn" onclick="saveEdit()">✓ Save changes</button>
       <button class="ecancel" onclick="closeEdit()">Cancel</button>
     </div>`;
+  renderStepPhotosGrid();
   document.getElementById('editOv').classList.add('open');
 }
 
-function triggerPhotoUpload(){
-  document.getElementById('editFileInput').click();
+function renderStepPhotosGrid(){
+  const grid=document.getElementById('stepPhotosGrid');if(!grid)return;
+  grid.innerHTML=pendingStepPhotos.map((p,i)=>`
+    <div class="step-photo-thumb">
+      <img src="${p.url}" alt="step ${i+1}">
+      <button class="step-photo-del" onclick="removeStepPhoto(${i})">×</button>
+    </div>`).join('');
 }
 
-document.getElementById('editFileInput').addEventListener('change', async function(e){
-  const file = e.target.files[0];
-  if(!file) return;
-  pendingPhotoFile = file;
-  // show preview immediately
-  const reader = new FileReader();
-  reader.onload = ev => {
-    const prev = document.getElementById('photoPreview');
-    if(prev.tagName==='IMG'){
-      prev.src = ev.target.result;
-    } else {
-      prev.outerHTML = `<img src="${ev.target.result}" class="photo-preview" id="photoPreview" alt="preview">`;
-    }
-    document.querySelector('.photo-upload-btn').textContent = '📷 Change photo';
+function removeStepPhoto(i){
+  pendingStepPhotos.splice(i,1);
+  renderStepPhotosGrid();
+}
+
+// dish photo selection
+document.getElementById('dishPhotoInput').addEventListener('change',function(e){
+  const file=e.target.files[0];if(!file)return;
+  pendingDishPhoto=file;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const prev=document.getElementById('dishPhotoPreview');
+    if(prev.tagName==='IMG') prev.src=ev.target.result;
+    else prev.outerHTML=`<img src="${ev.target.result}" class="photo-preview-img" id="dishPhotoPreview" alt="dish">`;
+    document.querySelector('.photo-upload-btn').textContent='📷 Change dish photo';
   };
   reader.readAsDataURL(file);
   this.value='';
 });
 
+// step photos — library
+document.getElementById('stepPhotoLibrary').addEventListener('change',async function(e){
+  await addStepFiles(Array.from(e.target.files));
+  this.value='';
+});
+
+// step photos — camera
+document.getElementById('stepPhotoCamera').addEventListener('change',async function(e){
+  await addStepFiles(Array.from(e.target.files));
+  this.value='';
+});
+
+async function addStepFiles(files){
+  const prog=document.getElementById('stepProgress');
+  if(prog) prog.textContent=`Adding ${files.length} photo${files.length>1?'s':''}...`;
+  for(const file of files){
+    const url=URL.createObjectURL(file);
+    pendingStepPhotos.push({url,isNew:true,file});
+  }
+  renderStepPhotosGrid();
+  if(prog) prog.textContent=`${pendingStepPhotos.length} step photo${pendingStepPhotos.length>1?'s':''} ready`;
+}
+
 async function saveEdit(){
-  const btn = document.getElementById('esaveBtn');
-  btn.disabled=true; btn.textContent='Saving...';
+  const btn=document.getElementById('esaveBtn');
+  btn.disabled=true;btn.textContent='Saving...';
+  const d=dishes.find(x=>x.id===editId);if(!d)return;
+  d.en=document.getElementById('een').value.trim()||d.en;
+  d.zh=document.getElementById('ezh').value.trim()||d.zh;
+  d.cuisine=document.getElementById('ecui').value;
+  d.cat=document.getElementById('ecat').value;
+  d.emoji=document.getElementById('eemo').value.trim()||d.emoji;
+  d.recipe=document.getElementById('erec').value.trim();
+  d.link=document.getElementById('elnk').value.trim();
 
-  const d = dishes.find(x=>x.id===editId); if(!d)return;
-  d.en = document.getElementById('een').value.trim()||d.en;
-  d.zh = document.getElementById('ezh').value.trim()||d.zh;
-  d.cuisine = document.getElementById('ecui').value;
-  d.cat = document.getElementById('ecat').value;
-  d.emoji = document.getElementById('eemo').value.trim()||d.emoji;
-  d.recipe = document.getElementById('erec').value.trim();
-  d.link = document.getElementById('elnk').value.trim();
-
-  // upload photo if one was selected
-  if(pendingPhotoFile){
+  // upload dish photo
+  if(pendingDishPhoto){
     try{
-      btn.textContent='Uploading photo...';
-      document.getElementById('uploadStatus').style.display='flex';
-      // animate bar
-      let prog=0;
-      const bar=document.getElementById('uploadBarFill');
-      const iv=setInterval(()=>{ prog=Math.min(prog+10,85); bar.style.width=prog+'%'; },200);
-      const url = await uploadPhoto(pendingPhotoFile, editId);
-      clearInterval(iv); bar.style.width='100%';
-      d.photo = url;
-      pendingPhotoFile=null;
-    } catch(e){
-      toast('Photo upload failed — check connection');
-    }
+      btn.textContent='Uploading dish photo...';
+      d.photo=await uploadFile(pendingDishPhoto,`dish_${editId}`);
+    }catch{toast('Photo upload failed');}
   }
 
-  try{
-    await dbUpdate(editId,{en:d.en,zh:d.zh,cuisine:d.cuisine,cat:d.cat,
-      emoji:d.emoji,recipe:d.recipe,link:d.link,photo:d.photo});
-    setSyncDot('ok'); toast('Saved & synced ✓');
-  } catch{ setSyncDot('err'); toast('Saved locally (sync failed)'); }
+  // upload new step photos
+  const uploadedStepPhotos=[];
+  let stepCount=0;
+  for(const p of pendingStepPhotos){
+    if(p.isNew&&p.file){
+      try{
+        stepCount++;
+        btn.textContent=`Uploading step photo ${stepCount}...`;
+        const url=await uploadFile(p.file,`step_${editId}`);
+        uploadedStepPhotos.push(url);
+      }catch{toast(`Step photo ${stepCount} failed`);}
+    } else {
+      uploadedStepPhotos.push(p.url);
+    }
+  }
+  d.step_photos=uploadedStepPhotos;
 
-  closeEdit(); renderAll();
+  try{
+    btn.textContent='Syncing...';
+    await dbUpdate(editId,{en:d.en,zh:d.zh,cuisine:d.cuisine,cat:d.cat,
+      emoji:d.emoji,recipe:d.recipe,link:d.link,photo:d.photo,step_photos:d.step_photos});
+    setSyncDot('ok');toast('Saved & synced ✓');
+  }catch{setSyncDot('err');toast('Saved locally (sync failed)');}
+
+  closeEdit();renderAll();
   setTimeout(()=>openDet(editId),50);
 }
 
-function closeEdit(){ document.getElementById('editOv').classList.remove('open'); pendingPhotoFile=null; }
+function closeEdit(){document.getElementById('editOv').classList.remove('open');pendingDishPhoto=null;pendingStepPhotos=[];}
 
-// ══════════════════════════════════════
-//  NEW DISH
-// ══════════════════════════════════════
 async function newDish(){
-  const nd={en:'New Dish',zh:'新菜',
-    cuisine:aCuis!=='all'?aCuis:'chinese',
-    cat:aCat!=='all'?aCat:'meat',
-    emoji:'🍽',recipe:'',link:'',photo:'',saved:false};
-  try{
-    setSyncDot('loading');
-    const row=await dbInsert(nd);
-    dishes.push(row); setSyncDot('ok');
-    renderAll(); setTimeout(()=>openEdit(row.id),50);
-  } catch{ setSyncDot('err'); toast('Could not add — check connection'); }
+  const nd={en:'New Dish',zh:'新菜',cuisine:aCuis!=='all'?aCuis:'chinese',cat:aCat!=='all'?aCat:'meat',emoji:'🍽',recipe:'',link:'',photo:'',saved:false,step_photos:[]};
+  try{setSyncDot('loading');const row=await dbInsert(nd);dishes.push(row);setSyncDot('ok');renderAll();setTimeout(()=>openEdit(row.id),50);}
+  catch{setSyncDot('err');toast('Could not add — check connection');}
 }
 
-// ══════════════════════════════════════
-//  SEARCH
-// ══════════════════════════════════════
-function openSearch(){ document.getElementById('sbar').classList.add('open'); document.getElementById('sinp').focus(); }
-function closeSearch(){ document.getElementById('sbar').classList.remove('open'); sq=''; document.getElementById('sinp').value=''; renderAll(); }
-function onSearch(v){ sq=v.toLowerCase().trim(); renderAll(); }
+function openSearch(){document.getElementById('sbar').classList.add('open');document.getElementById('sinp').focus();}
+function closeSearch(){document.getElementById('sbar').classList.remove('open');sq='';document.getElementById('sinp').value='';renderAll();}
+function onSearch(v){sq=v.toLowerCase().trim();renderAll();}
 
-// ══════════════════════════════════════
-//  AUTO REFRESH every 30s
-// ══════════════════════════════════════
 setInterval(async()=>{
   try{
-    const data=await dbGet(); dishes=data;
+    const data=await dbGet();
+    dishes=data.map(d=>({...d,step_photos:d.step_photos||[]}));
     if(!document.getElementById('detOv').classList.contains('open')&&
-       !document.getElementById('editOv').classList.contains('open')){ renderAll(); }
+       !document.getElementById('editOv').classList.contains('open')){renderAll();}
     setSyncDot('ok');
-  } catch{ setSyncDot('err'); }
+  }catch{setSyncDot('err');}
 },30000);
 
 init();
